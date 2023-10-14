@@ -1,18 +1,26 @@
 import { Item, ButtonItemStore } from "./style";
-import pizza from "../../assets/pizza.png"
+import PropTypes from "prop-types"
 
-export function StoreItem(){
+StoreItem.propTypes={
+    title:PropTypes.string.isRequired,
+    description:PropTypes.string.isRequired,
+    picture:PropTypes.string.isRequired,
+}
+
+export function StoreItem(props){
+
     return(
         
             <Item>
-                <img src={pizza} alt="foto da pizza"/>
+        
+                <img src={props.picture} alt="foto da pizza"/>
 
                 <h1>
-                    Pizza Marguerita
+                    {props.title}
                 </h1>
 
                 <p>
-                    A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!
+                    {props.description}
                 </p>
 
                 <ButtonItemStore>Adicionar ao carrinho</ButtonItemStore>

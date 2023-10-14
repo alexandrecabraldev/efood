@@ -1,25 +1,58 @@
 import { Container, ContainerItem } from "./style";
-import produto from "../../assets/produto.png"
-import estrela from "../../assets/estrela.svg"
+
 import produto2 from "../../assets/produto2.png"
 import { Item } from "../Item";
+import { useEffect } from "react";
+import { useState } from "react";
+
+export const apiUrl = 'https://fake-api-tau.vercel.app/api/efood/restaurantes';
 
 export function Body(){
+
+    const [dataApi, setDataApi] = useState([]);
+    
+
+    async function callApi(){
+        const response = await fetch(apiUrl);
+        const dataJson = await response.json();
+        setDataApi(dataJson);
+    }
+
+    useEffect(()=>{
+        callApi()
+    },[])
+
     return(
         <Container>
             <ContainerItem>
-                <Item 
-                    image={produto} 
-                    starRating={estrela}
-                    title="Hioki Sushi "
-                    description="Peça R$ 1,99 já o melhor da culinária japonesa no conforto da sua casa! Sushis frescos, sashimis deliciosos e pratos quentes irresistíveis. Entrega rápida, embalagens cuidadosas e qualidade garantida. Experimente o Japão sem sair do lar com nosso delivery!"
-                    category="Japonesa"
-                    highlight
-                />
+                {
+                    dataApi.map((item)=>{
+                        let highlight = true;
+
+                        if(item.id===1){
+                            highlight = true;
+                        }else{
+                            highlight = false;
+                        }
+
+                        return (
+                            <Item 
+                                key={item.id}
+                                id={item.id}
+                                image={item.capa}
+                                starRating={item.avaliacao}
+                                title={item.titulo}
+                                description={item.descricao}
+                                category={item.tipo}
+                                highlight = {highlight}
+                            />
+                        )
+                    })
+                }
                 
                 <Item 
                     image={produto2} 
-                    starRating={estrela}
+                    starRating={4.9}
                     title="La Dolce Vita Trattoria"
                     description="A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e risotos incríveis, tudo no conforto do seu lar. Entrega rápida, pratos bem embalados e sabor inesquecível. Peça já!"
                     category="Italiana"
@@ -27,35 +60,12 @@ export function Body(){
     
                 <Item 
                     image={produto2} 
-                    starRating={estrela}
+                    starRating={4.9}
                     title="La Dolce Vita Trattoria"
                     description="A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e risotos incríveis, tudo no conforto do seu lar. Entrega rápida, pratos bem embalados e sabor inesquecível. Peça já!"
                     category="Italiana"
                 />
     
-                <Item 
-                    image={produto2} 
-                    starRating={estrela}
-                    title="La Dolce Vita Trattoria"
-                    description="A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e risotos incríveis, tudo no conforto do seu lar. Entrega rápida, pratos bem embalados e sabor inesquecível. Peça já!"
-                    category="Italiana"
-                />
-    
-                <Item 
-                    image={produto2} 
-                    starRating={estrela}
-                    title="La Dolce Vita Trattoria"
-                    description="A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e risotos incríveis, tudo no conforto do seu lar. Entrega rápida, pratos bem embalados e sabor inesquecível. Peça já!"
-                    category="Italiana"
-                />
-    
-                <Item 
-                    image={produto2} 
-                    starRating={estrela}
-                    title="La Dolce Vita Trattoria"
-                    description="A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e risotos incríveis, tudo no conforto do seu lar. Entrega rápida, pratos bem embalados e sabor inesquecível. Peça já!"
-                    category="Italiana"
-                />
             </ContainerItem>
         </Container>
     );

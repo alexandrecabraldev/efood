@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const ContainerProduct = styled.div`
-    
+
     position: relative;
     border: 1px solid ${props=>props.theme.text};
     background-color: white;
@@ -15,6 +15,10 @@ export const ContainerProduct = styled.div`
 
     & > img{
         width: 100%;
+        max-width: 480px;
+        max-height: 280px;
+        object-fit: cover;
+        
     }
 `;
 

@@ -3,7 +3,12 @@ import {Footer} from "../Footer"
 import { Container } from "../Body/style";
 import { StoreBody } from "../StoreBody";
 
+
+
 export function StorePage(){
+
+    
+
     return (
         <>
             <StoreHeader/>

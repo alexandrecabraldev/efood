@@ -1,9 +1,12 @@
 import { ContainerProduct, ContainerCategory, Category, ContainerDishTitleAndScore, ContainerScore, Description, Button } from "./style";
 import PropTypes from "prop-types"
 
+import estrela from "../../assets/estrela.svg"
+
 Item.propTypes={
+    id:PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,
-    starRating: PropTypes.string.isRequired,
+    starRating: PropTypes.number.isRequired,
     title:PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
@@ -27,9 +30,9 @@ export function Item(props){
                         <h2>{props.title}</h2>
                         <ContainerScore>
                             <span>
-                                4.9
+                                {props.starRating}
                             </span>
-                            <img src={props.starRating} alt="imagem de uma estrela dourada"/>
+                            <img src={estrela} alt="imagem de uma estrela dourada"/>
                         </ContainerScore>
                     </ContainerDishTitleAndScore>
     
@@ -37,7 +40,7 @@ export function Item(props){
                         {props.description}
                     </Description>
     
-                    <Button to={`/${props.category}/${props.title}`}>Saiba mais</Button>
+                    <Button to={`/${props.id}/${props.category}/${props.title}`}>Saiba mais</Button>
                 </div>
             </ContainerProduct>
     );
