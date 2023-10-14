@@ -14,6 +14,7 @@ export function StoreBody(){
     const {id} = useParams();
     const [data, setData] = useState({});
     const [openModal, setOpenModal] =  useState(false)
+    const [modalInformation,setModalInformation] = useState({})
 
     async function api(){
         const response = await fetch(apiUrl)
@@ -25,8 +26,13 @@ export function StoreBody(){
         api()
     },[]);
 
-    function handleClickItem(){
+    function handleClickItem(picture, title, description){
         setOpenModal(!openModal)
+        setModalInformation({
+            modalPicture:picture,
+            modalTitle: title,
+            modalDescription: description,
+        })
     }
 
     console.log(data)
@@ -40,6 +46,9 @@ export function StoreBody(){
                     <Modal 
                         open={openModal} 
                         handleClick={handleClickItem}
+                        picture={modalInformation.modalPicture}
+                        title={modalInformation.modalTitle}
+                        description={modalInformation.modalDescription}
                     />}
                 {
                     data.cardapio && data.cardapio.map((item)=>{
