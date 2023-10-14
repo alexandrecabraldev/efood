@@ -5,6 +5,7 @@ import PropsTypes from 'prop-types'
 
 Modal.propTypes ={
     open: PropsTypes.bool.isRequired,
+    handleClick:PropsTypes.func,
 }
 
 export function Modal(props){
@@ -12,7 +13,7 @@ export function Modal(props){
     function handleClick(){
         props.handleClick()
     }
-    
+
     return(
 
         <Dialog>

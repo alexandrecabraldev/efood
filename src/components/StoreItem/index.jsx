@@ -5,6 +5,7 @@ StoreItem.propTypes={
     title:PropTypes.string.isRequired,
     description:PropTypes.string.isRequired,
     picture:PropTypes.string.isRequired,
+    handleClick:PropTypes.func,
 }
 
 export function StoreItem(props){
