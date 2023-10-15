@@ -9,6 +9,7 @@ Modal.propTypes ={
     title:PropsTypes.string.isRequired,
     description:PropsTypes.string.isRequired,
     price:PropsTypes.number.isRequired,
+    porcao:PropsTypes.string.isRequired,
 }
 
 export function Modal(props){
@@ -34,7 +35,7 @@ export function Modal(props){
             <div>
                 <h2>{props.title}</h2>
                 <p>{props.description}</p>
-                <span>Serve: de 2 a 3 pessoas</span>
+                <span>Serve: {props.porcao}</span>
                 <button>Adicionar ao carrinho - {priceFormated}</button>
             </div>
         </Dialog>

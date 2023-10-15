@@ -52,6 +52,7 @@ export function StoreBody(){
                         title={modalInformation.modalTitle}
                         description={modalInformation.modalDescription}
                         price={modalInformation.modalPrice}
+                        porcao={modalInformation.modalPorcao}
                     />}
                 {
                     data.cardapio && data.cardapio.map((item)=>{
