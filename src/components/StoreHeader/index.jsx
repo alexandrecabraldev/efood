@@ -5,7 +5,8 @@ import { LinkComponent } from "./style.js";
 
 export function StoreHeader(){
 
-    const { category,storeName } = useParams();
+    const { category,storeName, storeCapa, format } = useParams();
+    console.log(storeCapa);
 
     return(
         <ContainerHeader>
@@ -17,7 +18,8 @@ export function StoreHeader(){
                 <LinkComponent to="#">0 produto(s) no carrinho</LinkComponent>
             </ContainerPage>
 
-            <ImageStore>
+            <ImageStore 
+            url={'https://fake-api-tau.vercel.app/efood/'+storeCapa+'//capa.'+format}>
 
                 <div>
                     <CategoryStore>

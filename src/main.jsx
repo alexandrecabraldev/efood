@@ -24,16 +24,18 @@ const router = createBrowserRouter([
     element:<App/>,
   },
   {
-    path:'/:id/:category/:storeName',
+    path:'/:id/:category/:storeName/:storeCapa/:format',
     element: <StorePage/>,
   }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-  <ThemeProvider theme={GlobalTheme}>
+    <ThemeProvider theme={GlobalTheme}>
+    
       <RouterProvider router={router}/>
       <GlobalStyle />
+
     </ThemeProvider>
   </React.StrictMode>,
 )

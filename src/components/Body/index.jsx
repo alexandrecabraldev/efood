@@ -17,7 +17,7 @@ export function Body(){
     }
 
     useEffect(()=>{
-        callApi()
+        callApi();
     },[])
 
     return(
@@ -25,13 +25,6 @@ export function Body(){
             <ContainerItem>
                 {
                     dataApi.map((item)=>{
-                        let highlight = true;
-
-                        if(item.id===1){
-                            highlight = true;
-                        }else{
-                            highlight = false;
-                        }
 
                         return (
                             <Item 
@@ -42,7 +35,8 @@ export function Body(){
                                 title={item.titulo}
                                 description={item.descricao}
                                 category={item.tipo}
-                                highlight = {highlight}
+                                capa={item.capa}
+                                highlight = {item.destacado}
                             />
                         )
                     })

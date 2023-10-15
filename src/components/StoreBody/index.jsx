@@ -37,7 +37,7 @@ export function StoreBody(){
         })
     }
 
-    console.log(data)
+    //console.log(data)
 
     return(
         <Container>

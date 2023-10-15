@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import backgorundHeader from "../../assets/fundo.png"
-import imageStore from "../../assets/productPresentation.png"
 import { Link } from "react-router-dom";
 
 export const ContainerHeader = styled.header`
@@ -30,9 +29,11 @@ export const LinkComponent = styled(Link)`
         font-size: 1.125rem;
 `;
 
+
+
 export const ImageStore = styled.div`
     width: 100%;
-    background-image: url(${imageStore});
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${props=>props.url});
     background-repeat: no-repeat;
     background-size: cover;
 

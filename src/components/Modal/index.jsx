@@ -5,7 +5,7 @@ import PropsTypes from 'prop-types'
 Modal.propTypes ={
     open: PropsTypes.bool.isRequired,
     handleClick:PropsTypes.func,
-    picture:PropsTypes.string.insRequired,
+    picture:PropsTypes.string.isRequired,
     title:PropsTypes.string.isRequired,
     description:PropsTypes.string.isRequired,
     price:PropsTypes.number.isRequired,
