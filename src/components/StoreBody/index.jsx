@@ -26,12 +26,14 @@ export function StoreBody(){
         api()
     },[]);
 
-    function handleClickItem(picture, title, description){
+    function handleClickItem(picture, title, description, price, porcao){
         setOpenModal(!openModal)
         setModalInformation({
             modalPicture:picture,
             modalTitle: title,
             modalDescription: description,
+            modalPrice: price,
+            modalPorcao: porcao,
         })
     }
 
@@ -49,6 +51,7 @@ export function StoreBody(){
                         picture={modalInformation.modalPicture}
                         title={modalInformation.modalTitle}
                         description={modalInformation.modalDescription}
+                        price={modalInformation.modalPrice}
                     />}
                 {
                     data.cardapio && data.cardapio.map((item)=>{
@@ -58,6 +61,8 @@ export function StoreBody(){
                                 title = {item.nome}
                                 description = {item.descricao}
                                 picture={item.foto}
+                                price={item.preco}
+                                porcao={item.porcao}
                                 handleClick={handleClickItem}
                             />
                             )

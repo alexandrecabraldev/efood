@@ -6,12 +6,14 @@ StoreItem.propTypes={
     description:PropTypes.string.isRequired,
     picture:PropTypes.string.isRequired,
     handleClick:PropTypes.func,
+    price: PropTypes.number.isRequired,
+    porcao: PropTypes.string.isRequired,
 }
 
 export function StoreItem(props){
 
     function handleClickButtonItemStore(){
-        props.handleClick(props.picture, props.title, props.description)
+        props.handleClick(props.picture, props.title, props.description, props.price, props.porcao)
     }
 
     return(
@@ -28,7 +30,10 @@ export function StoreItem(props){
                     {props.description}
                 </p>
 
-                <ButtonItemStore onClick={handleClickButtonItemStore}>Adicionar ao carrinho</ButtonItemStore>
+                <ButtonItemStore 
+                onClick={handleClickButtonItemStore}>
+                    Adicionar ao carrinho
+                </ButtonItemStore>
             </Item>
     );
 }

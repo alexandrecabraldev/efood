@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const ContainerProduct = styled.div`
-
     position: relative;
     border: 1px solid ${props=>props.theme.text};
     background-color: white;
@@ -11,6 +10,10 @@ export const ContainerProduct = styled.div`
 
     & > div{
         padding: 0.5rem;
+        /* height: 205px; */
+        /* display: flex;
+        flex-direction: column;
+        justify-content: space-between; */
     }
 
     & > img{

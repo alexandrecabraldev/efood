@@ -15,6 +15,7 @@ export const Dialog = styled.div`
     & > img{
         width: 320px;
         height: 280px;
+        object-fit: cover;
     }
 
     div{
@@ -22,12 +23,16 @@ export const Dialog = styled.div`
         flex-direction: column;
         gap: 1rem;
         justify-content: space-between;
-        
+
         button{
+            background-color: ${props=>props.theme.footerBackground};
+            color: ${props=>props.theme.text};
             width: fit-content;
             border: none;
             padding: 4px 6px;
             cursor: pointer;
+            font-weight: 700;
+            font-size: 0.875rem;
         }
     }
 

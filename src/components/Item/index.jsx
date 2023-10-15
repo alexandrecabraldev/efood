@@ -42,7 +42,6 @@ export function Item(props){
     
                     <Button to={`/${props.id}/${props.category}/${props.title}`}>Saiba mais</Button>
                 </div>
-
             </ContainerProduct>
     );
 }
