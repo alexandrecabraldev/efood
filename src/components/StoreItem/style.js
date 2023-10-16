@@ -20,23 +20,24 @@ export const Item = styled.div`
 
     h1{
         font-weight: 900;
-        font-size: 1rem;
+        font-size: 16px;
         color: ${props=>props.theme.footerBackground};
     }
 
     p{
-        font-size: 0.875rem;
+        font-weight: 400;
+        font-size: 14px;
         color: ${props=>props.theme.footerBackground};
-        line-height: 1.375rem;
+        line-height: 22px;
     }
 `;
 
 export const ButtonItemStore = styled.button`
     
-    padding: 0.25rem 5.25rem;
+    padding: 4px 84px;
     color: ${props=>props.theme.text};
     font-weight: 700;
-    font-size: 0.875rem;
+    font-size: 14px;
     border: none;
     //border-radius: 6px;
     background-color: ${props=>props.theme.footerBackground};
