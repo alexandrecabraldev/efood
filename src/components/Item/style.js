@@ -5,7 +5,7 @@ export const ContainerProduct = styled.div`
     position: relative;
     border: 1px solid ${props=>props.theme.text};
     background-color: white;
-    border-radius: 6px;
+    //border-radius: 6px;
     overflow: hidden;
 
     & > div{
@@ -17,9 +17,10 @@ export const ContainerProduct = styled.div`
     }
 
     & > img{
-        width: 100%;
-        max-width: 480px;
-        max-height: 280px;
+        width: 472px;
+        height: 217px;
+        /* max-width: 480px;
+        max-height: 280px; */
         object-fit: cover;
         
     }
@@ -33,7 +34,8 @@ export const ContainerDishTitleAndScore = styled.div`
     h2{
         font-weight: 700;
         color: ${props=>props.theme.text};
-        font-size: 1.125rem;
+        font-size: 18px;
+        line-height: normal;
     }
 `;
 
@@ -54,29 +56,34 @@ export const Description = styled.span`
     display: block;
     padding: 1rem 0;
     color: ${props=>props.theme.text};
-    font-size: 0.875rem;
-    line-height: 1.375rem;
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
 `;
 
 export const Button =styled(Link)`
     display: inline-block;
     text-decoration: none;
 
-    padding: 0.25rem 0.375rem;
+    padding: 4px 6px;
     color: white;
     border: none;
     background-color: ${props=>props.theme.text};
-    border-radius: 6px;
-    font-size: 0.875rem;
+    color: ${props=>props.theme.footerBackground};
+    //border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
 
 `;
 
 export const Category = styled.div`
-    padding: 0.25rem 0.375rem;
-    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 6px 4px;
+    color: ${props=>props.theme.footerBackground};
     border: none;
     background-color: ${props=>props.theme.text};
-    border-radius: 6px;
+    //border-radius: 6px;
 `;
 
 export const ContainerCategory = styled.section`

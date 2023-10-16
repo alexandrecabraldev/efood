@@ -4,17 +4,17 @@ export const Item = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 0.5rem;
+    gap: 8px;
 
     padding: 0.5rem;
-    border-radius: 6px;
+    //border-radius: 6px;
     background-color: ${props=>props.theme.text};
 
     overflow: hidden;
     img{
-        border-radius: 6px; 
-        max-width: 320px;
-        height: 240px;
+        //border-radius: 6px; 
+        max-width: 304px;
+        height: 167px;
         object-fit: cover;
     }
 
@@ -38,7 +38,7 @@ export const ButtonItemStore = styled.button`
     font-weight: 700;
     font-size: 0.875rem;
     border: none;
-    border-radius: 6px;
+    //border-radius: 6px;
     background-color: ${props=>props.theme.footerBackground};
 
     cursor: pointer;

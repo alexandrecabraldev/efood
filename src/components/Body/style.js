@@ -10,7 +10,7 @@ export const Container = styled.main`
 export const ContainerItem = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 5rem;
+    gap: 80px;
 
     padding: 5rem 0;
     max-width: 64rem;

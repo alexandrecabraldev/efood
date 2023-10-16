@@ -35,7 +35,7 @@ export function Modal(props){
             <div>
                 <h2>{props.title}</h2>
                 <p>{props.description}</p>
-                <span>Serve: {props.porcao}</span>
+                <span>Serve: de {props.porcao}</span>
                 <button>Adicionar ao carrinho - {priceFormated}</button>
             </div>
         </Dialog>

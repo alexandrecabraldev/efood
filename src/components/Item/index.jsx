@@ -30,7 +30,7 @@ export function Item(props){
                     <Category>{props.category}</Category>
                 </ContainerCategory>
 
-                <img src={props.image} alt="imagem de um sushi no prato sendo pego por dois palitinhos para consumo"/>
+                <img src={props.image} alt=""/>
                 
 
                 <div>
@@ -50,6 +50,6 @@ export function Item(props){
     
                     <Button to={`/${props.id}/${props.category}/${props.title}/${partUrlNameStore}/${format[format.length-1]}`}>Saiba mais</Button>
                 </div>
-            </ContainerProduct>
+        </ContainerProduct>
     );
 }
