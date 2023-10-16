@@ -92,5 +92,5 @@ export const ContainerCategory = styled.section`
     
     position: absolute;
     top:16px;
-    right: 8px;
+    right: 16px;
 `;
