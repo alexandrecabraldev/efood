@@ -3,7 +3,8 @@ import { Dialog, CloseButton } from "./style"
 import PropsTypes from 'prop-types'
 
 Modal.propTypes ={
-    open: PropsTypes.bool.isRequired,
+    //open: PropsTypes.bool.isRequired,
+    handleClickAddCart: PropsTypes.func.isRequired,
     handleClick:PropsTypes.func,
     picture:PropsTypes.string.isRequired,
     title:PropsTypes.string.isRequired,
@@ -25,6 +26,10 @@ export function Modal(props){
         props.handleClick()
     }
 
+    function handleClickCart(){
+        props.handleClickAddCart(props.picture, props.title, priceFormated)
+    }
+
     return(
 
         <Dialog>
@@ -36,7 +41,7 @@ export function Modal(props){
                 <h2>{props.title}</h2>
                 <p>{props.description}</p>
                 <span>Serve: de {props.porcao}</span>
-                <button>Adicionar ao carrinho - {priceFormated}</button>
+                <button onClick={handleClickCart}>Adicionar ao carrinho - {priceFormated}</button>
             </div>
         </Dialog>
 

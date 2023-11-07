@@ -6,6 +6,8 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalTheme } from './components/global/GlobalTheme.js';
 import { StorePage } from './components/StorePage/index.jsx';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import store from './redux/store.js';
+import { Provider } from 'react-redux';
 
 /*
     *Informações para legibilidade do código 
@@ -32,10 +34,10 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={GlobalTheme}>
-    
-      <RouterProvider router={router}/>
-      <GlobalStyle />
-
+      <Provider store={store}>
+        <RouterProvider router={router}/>
+        <GlobalStyle />
+      </Provider>
     </ThemeProvider>
   </React.StrictMode>,
 )

@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
         position: relative;
     }
     
-    body ,p, h1, h2, button, span, a {
+    body ,p, h1, h2, h3, button, span, a {
         font-family: 'Roboto', sans-serif;
     }
 
