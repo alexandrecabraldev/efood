@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     element:<App/>,
   },
   {
-    path:'/:id/:category/:storeName/:storeCapa/:format',
+    path:'/:id',
     element: <StorePage/>,
   }
 ])

@@ -16,10 +16,6 @@ Item.propTypes={
 
 export function Item(props){
     
-    const url = new URL(props.capa);
-    const pathParts = url.pathname.split('/')
-    const partUrlNameStore = pathParts[2];
-    const format = pathParts[pathParts.length-1].split('.')
 
     return(
         <ContainerProduct>
@@ -47,7 +43,7 @@ export function Item(props){
                         {props.description}
                     </Description>
     
-                    <Button to={`/${props.id}/${props.category}/${props.title}/${partUrlNameStore}/${format[format.length-1]}`}>Saiba mais</Button>
+                    <Button to={`/${props.id}`}>Saiba mais</Button>
                 </div>
         </ContainerProduct>
     );
