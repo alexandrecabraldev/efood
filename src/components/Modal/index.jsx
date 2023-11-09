@@ -20,8 +20,6 @@ export function Modal(props){
         currency:'BRL',
     })
 
-    console.log(priceFormated);
-
     function handleClick(){
         props.handleClick()
     }

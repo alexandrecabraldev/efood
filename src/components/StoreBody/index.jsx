@@ -5,30 +5,33 @@ import {ContainerStoreItem} from "./style";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { apiUrl } from "../Body";
 import { Modal } from "../Modal";
 import { ContainerDialog } from "../Modal/style";
 import { Cart } from "../Cart";
 
+import {useGetRestaurantByIdQuery} from "../../redux/apiStore.js"
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeCartItem } from "../../redux/cartSlice";
+
 export function StoreBody(){
 
     const {id} = useParams();
-    const [data, setData] = useState({});
     const [openModal, setOpenModal] =  useState(false)
     const [modalInformation,setModalInformation] = useState({})
     const [openCart, setOpenCart] = useState(false);
-    const [cartInformation, setCartInformation] = useState([]);
+
     const [cartTotalPrice, setCartTotalPrice] = useState(0);
 
-    async function api(){
-        const response = await fetch(apiUrl)
-        const dataJson = await response.json();
-        setData(dataJson[id-1]);
-    }
+    const {data, isLoading} = useGetRestaurantByIdQuery(id);
+
+    const cart = useSelector((state)=>state.cart);
+    const dispatch = useDispatch();
 
     useEffect(()=>{
-        api()
-    },[]);
+        console.log(cart)
+    },[cart])
+
+
 
     function handleClickItem(picture, title, description, price, porcao){
         setOpenModal(!openModal)
@@ -48,21 +51,22 @@ export function StoreBody(){
         setOpenModal(false);
         setOpenCart(true);
 
-        const isItemDuplicatied = cartInformation.some(item=>item.title===title);
+        const isItemDuplicatied = cart.some(item=>item.title===title);
 
         if(isItemDuplicatied){
             return alert('Este ítem já está adicionado no carrinho, tente outro');
         }
 
-        setCartInformation(state=>[...state,{
-            title,
+        dispatch(addToCart({
             picture,
+            title,
             price
-        }])
+        }))
+        
         setCartTotalPrice(state=>state + priceUnformated)
         console.log('add ao carrinho')
     }
-
+    
     function handleClickCart(){
         setOpenCart(!openCart);
         console.log('clicou para sair do cart');
@@ -70,9 +74,7 @@ export function StoreBody(){
 
     function removeItemCart(title){
 
-        setCartInformation(cartInformation.filter(item=>{
-            return item.title!==title;
-        }));
+        dispatch(removeCartItem(title))
 
         console.log(`removeu o item ${title} do carrinho`)
     }
@@ -84,7 +86,6 @@ export function StoreBody(){
                 {
                     openModal &&
                     <Modal 
-                        //open={openModal} 
                         handleClick={handleClickItem}
                         handleClickAddCart={handleClickAddCart}
                         picture={modalInformation.modalPicture}
@@ -98,26 +99,28 @@ export function StoreBody(){
                 { openCart &&
                     <Cart
                         handleClickCart={handleClickCart}
-                        cartInform={cartInformation}
                         removeItemCart={removeItemCart}
                         cartTotalPrice={cartTotalPrice}
                     />
                 }
 
                 {
-                    data.cardapio && data.cardapio.map((item)=>{
-                        return(
-                            <StoreItem
-                                key={item.id}
-                                title = {item.nome}
-                                description = {item.descricao}
-                                picture={item.foto}
-                                price={item.preco}
-                                porcao={item.porcao}
-                                handleClick={handleClickItem}
-                            />
-                            )
-                        })
+                    isLoading ?(<h1>Carregando...</h1>):
+                    (
+                        data.cardapio.map((item)=>{
+                            return(
+                                <StoreItem
+                                    key={item.id}
+                                    title = {item.nome}
+                                    description = {item.descricao}
+                                    picture={item.foto}
+                                    price={item.preco}
+                                    porcao={item.porcao}
+                                    handleClick={handleClickItem}
+                                />
+                                )
+                            })
+                    )
                     }
 
             </ContainerStoreItem>

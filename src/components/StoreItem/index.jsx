@@ -31,7 +31,7 @@ export function StoreItem(props){
                 </p>
 
                 <ButtonItemStore 
-                onClick={handleClickButtonItemStore}>
+                    onClick={handleClickButtonItemStore}>
                     Adicionar ao carrinho
                 </ButtonItemStore>
             </Item>

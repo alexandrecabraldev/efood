@@ -20,7 +20,6 @@ export function Item(props){
     const pathParts = url.pathname.split('/')
     const partUrlNameStore = pathParts[2];
     const format = pathParts[pathParts.length-1].split('.')
-    //console.log(format[format.length-1])
 
     return(
         <ContainerProduct>

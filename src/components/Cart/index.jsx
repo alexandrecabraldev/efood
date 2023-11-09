@@ -1,16 +1,17 @@
 import { BackgroundCart, CartMenu, ContainerItensCart, ItemCart, TrashImage, ContainerTotalCart } from "./style"
 import trash from "../../assets/lixeiraReciclagem.png"
 import PropTypes from "prop-types"
-// import { useState } from "react"
+import { useSelector } from "react-redux";
 
 Cart.propTypes={
     handleClickCart:PropTypes.func.isRequired,
-    cartInform: PropTypes.array.isRequired,
     removeItemCart:PropTypes.func.isRequired,
     cartTotalPrice:PropTypes.number.isRequired,
 }
 
 export function Cart(props){
+
+    const cart = useSelector((state)=>state.cart);
 
     return (
         <>
@@ -22,7 +23,7 @@ export function Cart(props){
                     <ContainerItensCart>
 
                         {
-                            props.cartInform.map(item=>{
+                            cart.map(item=>{
                                 return (
                                     <ItemCart key={item.title}>
                                     <div>

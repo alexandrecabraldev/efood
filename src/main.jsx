@@ -6,7 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalTheme } from './components/global/GlobalTheme.js';
 import { StorePage } from './components/StorePage/index.jsx';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import store from './redux/store.js';
+import { store } from './redux/store.js';
 import { Provider } from 'react-redux';
 
 /*
