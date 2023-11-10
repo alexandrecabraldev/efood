@@ -25,7 +25,7 @@ export function Modal(props){
     }
 
     function handleClickCart(){
-        props.handleClickAddCart(props.picture, props.title, priceFormated)
+        props.handleClickAddCart(props.picture, props.title, props.price)
     }
 
     return(

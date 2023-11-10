@@ -6,8 +6,6 @@ import { changeCart } from "../../redux/isCartOpen";
 import { removeCartItem } from "../../redux/cartSlice";
 import { useEffect,useState } from "react";
 
-
-
 export function Cart(){
 
     const [totalPriceCart, setTotalPriceCart] = useState(0);
@@ -48,18 +46,18 @@ export function Cart(){
                             cart.map(item=>{
                                 return (
                                     <ItemCart key={item.title}>
-                                    <div>
-                                        <img src={`${item.picture}`}/>
                                         <div>
-                                            <h3>{item.title}</h3>
-                                            <span>{item.price}</span>
-                                        </div>
-                                        <TrashImage 
-                                            src={trash} 
-                                            onClick={()=>removeItemCart(item.title)}
-                                        />
+                                            <img src={`${item.picture}`}/>
+                                            <div>
+                                                <h3>{item.title}</h3>
+                                                <span>R$ {item.price.toFixed(2)}</span>
+                                            </div>
+                                            <TrashImage 
+                                                src={trash} 
+                                                onClick={()=>removeItemCart(item.title)}
+                                            />
                                     </div>
-                                </ItemCart>
+                                    </ItemCart>
                                 )
                             })
                         }              

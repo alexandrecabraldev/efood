@@ -41,8 +41,8 @@ export function StoreBody(){
 
     function handleClickAddCart(picture, title, price){
 
-        const priceUnformated = parseFloat(price.replace("R$", "").replace(",", "."));
-
+        // const priceUnformated = parseFloat(price.replace("R$", "").replace(",", "."));
+        
         setOpenModal(false);
         dispatch(changeCart(true))
 
@@ -55,10 +55,9 @@ export function StoreBody(){
         dispatch(addToCart({
             picture,
             title,
-            price: priceUnformated,
+            price,
         }))
         
-        // setCartTotalPrice(state=>state + priceUnformated)
         console.log('add ao carrinho')
     }
 
@@ -80,9 +79,7 @@ export function StoreBody(){
                 }
 
                 { isCartOpen &&
-                    <Cart
-                        // cartTotalPrice={cartTotalPrice}
-                    />
+                    <Cart/>
                 }
 
                 {
