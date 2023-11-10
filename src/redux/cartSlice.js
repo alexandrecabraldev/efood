@@ -13,7 +13,7 @@ export const cartSlice = createSlice({
 
         removeCartItem:(state,action)=>{
             return state.filter((item)=>item.title!==action.payload)
-        }
+        },
     },
 })
 

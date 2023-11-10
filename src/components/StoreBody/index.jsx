@@ -3,7 +3,7 @@ import { StoreItem } from "../StoreItem";
 import {ContainerStoreItem} from "./style";
 
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Modal } from "../Modal";
 import { ContainerDialog } from "../Modal/style";
@@ -11,26 +11,21 @@ import { Cart } from "../Cart";
 
 import {useGetRestaurantByIdQuery} from "../../redux/apiStore.js"
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeCartItem } from "../../redux/cartSlice";
+import { addToCart } from "../../redux/cartSlice";
+import { changeCart } from "../../redux/isCartOpen";
 
 export function StoreBody(){
 
     const {id} = useParams();
-    const [openModal, setOpenModal] =  useState(false)
-    const [modalInformation,setModalInformation] = useState({})
-    const [openCart, setOpenCart] = useState(false);
-
-    const [cartTotalPrice, setCartTotalPrice] = useState(0);
+    const [openModal, setOpenModal] =  useState(false);
+    const [modalInformation,setModalInformation] = useState({});
 
     const {data, isLoading} = useGetRestaurantByIdQuery(id);
 
     const cart = useSelector((state)=>state.cart);
+    const isCartOpen = useSelector((state)=>state.isCartOpen);
+
     const dispatch = useDispatch();
-
-    useEffect(()=>{
-        console.log(cart)
-    },[cart])
-
 
 
     function handleClickItem(picture, title, description, price, porcao){
@@ -49,7 +44,7 @@ export function StoreBody(){
         const priceUnformated = parseFloat(price.replace("R$", "").replace(",", "."));
 
         setOpenModal(false);
-        setOpenCart(true);
+        dispatch(changeCart(true))
 
         const isItemDuplicatied = cart.some(item=>item.title===title);
 
@@ -60,23 +55,11 @@ export function StoreBody(){
         dispatch(addToCart({
             picture,
             title,
-            price
+            price: priceUnformated,
         }))
         
-        setCartTotalPrice(state=>state + priceUnformated)
+        // setCartTotalPrice(state=>state + priceUnformated)
         console.log('add ao carrinho')
-    }
-    
-    function handleClickCart(){
-        setOpenCart(!openCart);
-        console.log('clicou para sair do cart');
-    }
-
-    function removeItemCart(title){
-
-        dispatch(removeCartItem(title))
-
-        console.log(`removeu o item ${title} do carrinho`)
     }
 
     return(
@@ -96,11 +79,9 @@ export function StoreBody(){
                     />
                 }
 
-                { openCart &&
+                { isCartOpen &&
                     <Cart
-                        handleClickCart={handleClickCart}
-                        removeItemCart={removeItemCart}
-                        cartTotalPrice={cartTotalPrice}
+                        // cartTotalPrice={cartTotalPrice}
                     />
                 }
 

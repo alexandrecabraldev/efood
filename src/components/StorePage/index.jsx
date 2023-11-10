@@ -7,8 +7,6 @@ import { StoreBody } from "../StoreBody";
 
 export function StorePage(){
 
-    
-
     return (
         <>
             <StoreHeader/>

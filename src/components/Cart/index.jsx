@@ -1,21 +1,43 @@
 import { BackgroundCart, CartMenu, ContainerItensCart, ItemCart, TrashImage, ContainerTotalCart } from "./style"
 import trash from "../../assets/lixeiraReciclagem.png"
-import PropTypes from "prop-types"
-import { useSelector } from "react-redux";
 
-Cart.propTypes={
-    handleClickCart:PropTypes.func.isRequired,
-    removeItemCart:PropTypes.func.isRequired,
-    cartTotalPrice:PropTypes.number.isRequired,
-}
+import { useDispatch, useSelector } from "react-redux";
+import { changeCart } from "../../redux/isCartOpen";
+import { removeCartItem } from "../../redux/cartSlice";
+import { useEffect,useState } from "react";
 
-export function Cart(props){
 
+
+export function Cart(){
+
+    const [totalPriceCart, setTotalPriceCart] = useState(0);
     const cart = useSelector((state)=>state.cart);
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+
+        setTotalPriceCart( 
+            cart.reduce((acc,item)=>{
+                return acc + item.price;
+            },0)
+        )
+
+    },[cart]);
+
+    function handleClickCart(){
+        dispatch(changeCart(false))
+        console.log('clicou para sair do cart');
+    }
+
+    function removeItemCart(title){
+
+        dispatch(removeCartItem(title))
+        console.log(`removeu o item ${title} do carrinho`)
+    }
 
     return (
         <>
-            <BackgroundCart onClick={props.handleClickCart}>  
+            <BackgroundCart onClick={handleClickCart}>  
                 
             </BackgroundCart>
 
@@ -32,7 +54,10 @@ export function Cart(props){
                                             <h3>{item.title}</h3>
                                             <span>{item.price}</span>
                                         </div>
-                                        <TrashImage src={trash} onClick={()=>props.removeItemCart(item.title)}/>
+                                        <TrashImage 
+                                            src={trash} 
+                                            onClick={()=>removeItemCart(item.title)}
+                                        />
                                     </div>
                                 </ItemCart>
                                 )
@@ -42,7 +67,7 @@ export function Cart(props){
                         <ContainerTotalCart>
                             <div>
                                 <span>Valor total</span>
-                                <span>R$ {props.cartTotalPrice.toFixed(2)}</span>
+                                <span>R$ {totalPriceCart.toFixed(2)}</span>
                             </div>
                             <button>Continuar com a entrega</button>
                         </ContainerTotalCart>

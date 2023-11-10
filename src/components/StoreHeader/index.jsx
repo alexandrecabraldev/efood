@@ -3,7 +3,8 @@ import logoEfood from "../../assets/logo.png"
 import { useParams } from "react-router-dom";
 import { LinkComponent } from "./style.js";
 import { useGetRestaurantByIdQuery } from "../../redux/apiStore";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { changeCart } from "../../redux/isCartOpen";
 
 export function StoreHeader(){
 
@@ -12,11 +13,11 @@ export function StoreHeader(){
     const cart = useSelector((state)=>state.cart)
     const { data,isLoading } = useGetRestaurantByIdQuery(id);
 
-    if(!isLoading){
-        console.log(data);
-        console.log("tamanho do carrinho: "+cart.length)
-    }
+    const dispatch = useDispatch();
     
+    function handleCLickCart(){
+        dispatch(changeCart(true))
+    }
 
     return(
         <>
@@ -27,7 +28,7 @@ export function StoreHeader(){
 
                             <img src={logoEfood} alt="logo do efood"/>
 
-                            <LinkComponent to="#">{cart.length} produto(s) no carrinho</LinkComponent>
+                            <LinkComponent to="#" onClick={handleCLickCart}>{cart.length} produto(s) no carrinho</LinkComponent>
                         </ContainerPage>
 
                         <ImageStore 

@@ -1,13 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import cartSlice from "./cartSlice";
-// import apiDataSlice from "./apiDataSlice"
+
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { apiStore } from "./apiStore";
+import { isCartOpen } from "./isCartOpen";
 
 export const store = configureStore({
     reducer:{
         cart:cartSlice,
         [apiStore.reducerPath]: apiStore.reducer,
+        isCartOpen: isCartOpen.reducer,
+        // cartTotalPrice:cartTotalPrice.reducer,
 
     },
 
