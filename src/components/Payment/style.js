@@ -39,7 +39,9 @@ export const ContainerLabelInput = styled.div`
 export const ContainerCepNumber = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
+    justify-content: center;
     gap: 2rem;
+    margin-bottom: 8px;
     
 `;
 
@@ -130,4 +132,9 @@ export const Container = styled.div`
     padding: 0 8px 0;
     display: flex;
     flex-direction: column;
+`;
+
+export const ErrorMessage = styled.span`
+    font-size: 14px;
+    color: #B90101;
 `;

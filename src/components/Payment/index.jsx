@@ -3,45 +3,52 @@ import { changePayment } from "../../redux/isPaymentOpen";
 import PropTypes from "prop-types"
 import { changeAdressEdit } from "../../redux/isAdressEditOpen"
 import { useForm } from "react-hook-form";
-import { Form, ContainerLabelInput, ContainerCepNumber, ContainerButton, ContainerCvvCardNumber, ContainerFinishOrder, Loading, ErroMessage, Button, Container } from "./style";
+import { Form, ContainerLabelInput, ContainerCepNumber, ContainerButton, ContainerCvvCardNumber, ContainerFinishOrder, Loading, ErroMessage, Button, Container, ErrorMessage } from "./style";
 import { changeCart } from "../../redux/isCartOpen";
 import { emptyCart } from "../../redux/cartSlice";
 import { useState } from "react";
 import { usePurchaseMutation } from "../../redux/apiStore";
 import * as yup from "yup"
+// import { useHookFormMask } from "use-mask-input"
+import { yupResolver } from "@hookform/resolvers/yup"
+
 
 Payment.propTypes = {
     totalPriceCart: PropTypes.number.isRequired,
 }
 
 const adressSchema = yup.object({
-    nameDeliver:yup.string().required("O nome de quem irá receber é obrigatório"),
-    adress: yup.string().required("Endereço é obrigatório"),
-    city: yup.string().required("Cidade é obrigatório"),
-    CEP: yup.string().required("CEP é obrigatório"),
-    number: yup.number().required("Número é obrigatório e deve ser inteiro").positive().integer(),
+    nameDeliver:yup.string().required("O nome de quem irá receber é obrigatório").min(4,'O nome deve ter no mínimo 4 letras'),
+    adress: yup.string().required("Endereço é obrigatório").min(6,'O endereço deve ter no mínimo 6 letras'),
+    city: yup.string().required("Cidade é obrigatório").min(4,'A cidade deve ter no mínimo 4 letras'),
+    CEP: yup.string().required("CEP é obrigatório").length(8,'O CEP deve ter 8 letras').matches( /^\d+$/, 'O campo deve conter apenas números'),
+    number: yup.number().transform(value=>isNaN(value)? undefined : value).required("Número é obrigatório").positive("Deve ser positivo").integer("Deve ser inteiro"),
     extra: yup.string().transform(value=>value || undefined).default('sem complemento')
 })
 
 export function Payment({totalPriceCart}){
-
+    
     const cart = useSelector((state)=>state.cart);
     const adressEdit = useSelector((state)=>state.isAdressEditOpen);
     const dispatch = useDispatch();
     const [orderInformation, setOrderInformation]= useState({});
     const [purchase, result] = usePurchaseMutation();
 
-    const {register, handleSubmit } = useForm();
+    const {register, handleSubmit, formState: { errors } } = useForm(
+        {resolver: yupResolver(adressSchema)}
+    );
+    // const registerWithMask = useHookFormMask(register);
 
     function onSubmitAdress(data){
         
-        adressSchema.validate(data).then((data)=>{
-            console.log(data)
-            setOrderInformation(data)
-            dispatch(changeAdressEdit(false))
-        }).catch(error=>{
-            return alert(`Erro de Validação: ${error.message}`)
-        })
+        setOrderInformation(data)
+        dispatch(changeAdressEdit(false))
+
+        // adressSchema.validate(data).then((data)=>{
+        //     console.log(data)
+        // }).catch(error=>{
+        //     return alert(`Erro de Validação: ${error.message}`)
+        // })
         
     }
 
@@ -96,9 +103,7 @@ export function Payment({totalPriceCart}){
         dispatch(changeAdressEdit(true))
         dispatch(changePayment(false))
     }
-    // console.log(result.isSuccess)
-    // console.log(result.data)
-    // console.log(result.isLoading)
+
     return (
         <>
             { adressEdit &&
@@ -106,24 +111,29 @@ export function Payment({totalPriceCart}){
                     <h3>Entrega</h3>
                     <ContainerLabelInput>
                         <label>Quem irá receber</label>
-                        <input type="text" {...register('nameDeliver', {required:true})}/>
+                        <input type="text" {...register('nameDeliver')}/>
+                        {errors.nameDeliver && <ErrorMessage>{errors.nameDeliver.message}</ErrorMessage>}
                     </ContainerLabelInput>
                     <ContainerLabelInput>
                         <label>Endereço</label>
-                        <input type="text" {...register('adress', {required:true})}/>
+                        <input type="text" {...register('adress')}/>
+                        {errors.adress && <ErrorMessage>{errors.adress.message}</ErrorMessage>}
                     </ContainerLabelInput>
                     <ContainerLabelInput>
                         <label>Cidade</label>
-                        <input type="text" {...register('city', {required:true})}/>
+                        <input type="text" {...register('city')}/>
+                        {errors.city && <ErrorMessage>{errors.city.message}</ErrorMessage>}
                     </ContainerLabelInput>
                     <ContainerCepNumber>
                         <ContainerLabelInput>
                             <label>CEP</label>
-                            <input type="text" {...register('CEP', {required:true})}/>
+                            <input type="text" {...register('CEP')}/>
+                            {errors.CEP && <ErrorMessage>{errors.CEP.message}</ErrorMessage>}
                         </ContainerLabelInput>
                         <ContainerLabelInput>
                             <label>Número</label>
-                            <input type="text" {...register('number', {required:true})} />
+                            <input type="text" {...register('number')} />
+                            {errors.number && <ErrorMessage>{errors.number.message}</ErrorMessage>}
                         </ContainerLabelInput>
                     </ContainerCepNumber>
                     <ContainerLabelInput>
