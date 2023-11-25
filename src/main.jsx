@@ -12,7 +12,6 @@ import { Provider } from 'react-redux';
 /*
     *Informações para legibilidade do código 
 
-    -O página web até momento só tem 2 páginas, a Home e a página da loja fictícia.
     -Todos os components com o nome 'Store', ex: StoreHeader, são da página da loja fictícia.
     -Todo o resto é da home page. 
     -O component main está a estrutura das rotas usando o react-router-dom.
@@ -28,7 +27,8 @@ const router = createBrowserRouter([
   {
     path:'/:id',
     element: <StorePage/>,
-  }
+  },
+
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(

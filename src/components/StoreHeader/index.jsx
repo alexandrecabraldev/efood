@@ -28,7 +28,7 @@ export function StoreHeader(){
 
                             <img src={logoEfood} alt="logo do efood"/>
 
-                            <LinkComponent to="#" onClick={handleCLickCart}>{cart.length} produto(s) no carrinho</LinkComponent>
+                            <LinkComponent to={`/${id}`} onClick={handleCLickCart}>{cart.length} produto(s) no carrinho</LinkComponent>
                         </ContainerPage>
 
                         <ImageStore 

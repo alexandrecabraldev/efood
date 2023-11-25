@@ -58,7 +58,6 @@ export function StoreBody(){
             price,
         }))
         
-        console.log('add ao carrinho')
     }
 
     return(

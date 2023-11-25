@@ -107,5 +107,16 @@ export const ContainerTotalCart = styled.div`
         font-weight: 700;
         font-size: 0.875rem;
         cursor: pointer;
+
+        &:disabled{
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
     }
+`;
+
+export const EmptyCart = styled.span`
+    color: ${props=>props.theme.footerBackground};
+    font-size: 0.875rem;
+    font-weight: 700;
 `;

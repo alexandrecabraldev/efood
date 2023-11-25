@@ -1,14 +1,17 @@
-import { BackgroundCart, CartMenu, ContainerItensCart, ItemCart, TrashImage, ContainerTotalCart } from "./style"
+import { BackgroundCart, CartMenu, ContainerItensCart, ItemCart, TrashImage, ContainerTotalCart, EmptyCart } from "./style"
 import trash from "../../assets/lixeiraReciclagem.png"
 
 import { useDispatch, useSelector } from "react-redux";
 import { changeCart } from "../../redux/isCartOpen";
 import { removeCartItem } from "../../redux/cartSlice";
 import { useEffect,useState } from "react";
+import { Payment } from "../Payment";
+import { changePayment } from "../../redux/isPaymentOpen";
 
 export function Cart(){
 
     const [totalPriceCart, setTotalPriceCart] = useState(0);
+    const isPaymentOpen = useSelector((state)=>state.isPaymentOpen)
     const cart = useSelector((state)=>state.cart);
     const dispatch = useDispatch();
 
@@ -24,13 +27,17 @@ export function Cart(){
 
     function handleClickCart(){
         dispatch(changeCart(false))
-        console.log('clicou para sair do cart');
+        // console.log('clicou para sair do cart');
     }
 
     function removeItemCart(title){
 
         dispatch(removeCartItem(title))
-        console.log(`removeu o item ${title} do carrinho`)
+        // console.log(`removeu o item ${title} do carrinho`)
+    }
+
+    function handleClickGoToPayment(){
+        dispatch(changePayment(!isPaymentOpen))
     }
 
     return (
@@ -40,7 +47,9 @@ export function Cart(){
             </BackgroundCart>
 
             <CartMenu>
-                    <ContainerItensCart>
+                {isPaymentOpen ? <Payment totalPriceCart={totalPriceCart} />
+                
+                :   <ContainerItensCart>
 
                         {
                             cart.map(item=>{
@@ -56,21 +65,26 @@ export function Cart(){
                                                 src={trash} 
                                                 onClick={()=>removeItemCart(item.title)}
                                             />
-                                    </div>
+                                        </div>
                                     </ItemCart>
                                 )
                             })
                         }              
 
                         <ContainerTotalCart>
-                            <div>
-                                <span>Valor total</span>
-                                <span>R$ {totalPriceCart.toFixed(2)}</span>
-                            </div>
-                            <button>Continuar com a entrega</button>
+                            { cart.length!=0 ?
+                                <div>
+                                    <span>Valor total</span>
+                                    <span>R$ {totalPriceCart.toFixed(2)}</span>
+                                </div>
+                                :
+                                <EmptyCart>Carrinho Vazio</EmptyCart>
+                            }
+                            <button onClick={handleClickGoToPayment} disabled={cart.length===0 ? true: false}>Continuar com a entrega</button>
                         </ContainerTotalCart>
                     </ContainerItensCart>
-                </CartMenu>
+                }
+            </CartMenu>
         </>
     )
 }
