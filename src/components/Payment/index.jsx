@@ -8,10 +8,20 @@ import { changeCart } from "../../redux/isCartOpen";
 import { emptyCart } from "../../redux/cartSlice";
 import { useState } from "react";
 import { usePurchaseMutation } from "../../redux/apiStore";
+import * as yup from "yup"
 
 Payment.propTypes = {
     totalPriceCart: PropTypes.number.isRequired,
 }
+
+const adressSchema = yup.object({
+    nameDeliver:yup.string().required("O nome de quem irá receber é obrigatório"),
+    adress: yup.string().required("Endereço é obrigatório"),
+    city: yup.string().required("Cidade é obrigatório"),
+    CEP: yup.string().required("CEP é obrigatório"),
+    number: yup.number().required("Número é obrigatório e deve ser inteiro").positive().integer(),
+    extra: yup.string().transform(value=>value || undefined).default('sem complemento')
+})
 
 export function Payment({totalPriceCart}){
 
@@ -24,9 +34,15 @@ export function Payment({totalPriceCart}){
     const {register, handleSubmit } = useForm();
 
     function onSubmitAdress(data){
-        // console.log(data)
-        setOrderInformation(data)
-        dispatch(changeAdressEdit(false))
+        
+        adressSchema.validate(data).then((data)=>{
+            console.log(data)
+            setOrderInformation(data)
+            dispatch(changeAdressEdit(false))
+        }).catch(error=>{
+            return alert(`Erro de Validação: ${error.message}`)
+        })
+        
     }
 
     function onSubmitCard(data){
@@ -112,7 +128,7 @@ export function Payment({totalPriceCart}){
                     </ContainerCepNumber>
                     <ContainerLabelInput>
                         <label>Complemento (opcional)</label>
-                        <input type="text" {...register('extra', {required:true})}/>
+                        <input type="text" {...register('extra')}/>
                     </ContainerLabelInput>
                     <ContainerButton>
                         <button type="submit">Continuar com o pagamento</button>
