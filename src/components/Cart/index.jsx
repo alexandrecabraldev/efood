@@ -9,12 +9,15 @@ import { Payment } from "../Payment";
 import { changePayment } from "../../redux/isPaymentOpen";
 import { changeAdressEdit } from "../../redux/isAdressEditOpen";
 
+
 export function Cart(){
 
     const [totalPriceCart, setTotalPriceCart] = useState(0);
     const isPaymentOpen = useSelector((state)=>state.isPaymentOpen)
     const cart = useSelector((state)=>state.cart);
     const dispatch = useDispatch();
+    const adressEdit = useSelector((state)=>state.isAdressEditOpen);
+
 
     useEffect(()=>{
 
@@ -26,9 +29,12 @@ export function Cart(){
     },[cart]);
 
     function handleClickCart(){
-        dispatch(changeCart(false))
-        dispatch(changePayment(false))
-        dispatch(changeAdressEdit(true))
+
+        if(adressEdit!=null){
+            dispatch(changeCart(false))
+            dispatch(changePayment(false))
+            dispatch(changeAdressEdit(true))
+        }
         // console.log('clicou para sair do cart');
     }
 

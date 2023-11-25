@@ -100,3 +100,34 @@ export const ContainerFinishOrder = styled.div`
         cursor: pointer;
     }
 `;
+
+export const Loading = styled.span`
+    color: ${props=>props.theme.footerBackground};
+    font-size: 2rem;
+    display: block;
+    padding: 32px 8px 0;
+`;
+
+export const ErroMessage = styled.span`
+    color: ${props=>props.theme.footerBackground};
+    font-size: 2rem;
+    display: block;
+    padding: 32px 8px 24px;
+`;
+
+export const Button = styled.button`
+    background-color: ${props=>props.theme.footerBackground};
+    border: none;
+    padding: 4px 0;
+    width: 100%;
+    color: ${props=>props.theme.text};
+    font-weight: 700;
+    font-size: 0.875rem;
+    cursor: pointer;
+`;
+
+export const Container = styled.div`
+    padding: 0 8px 0;
+    display: flex;
+    flex-direction: column;
+`;

@@ -3,7 +3,7 @@ import { changePayment } from "../../redux/isPaymentOpen";
 import PropTypes from "prop-types"
 import { changeAdressEdit } from "../../redux/isAdressEditOpen"
 import { useForm } from "react-hook-form";
-import { Form, ContainerLabelInput, ContainerCepNumber, ContainerButton, ContainerCvvCardNumber, ContainerFinishOrder } from "./style";
+import { Form, ContainerLabelInput, ContainerCepNumber, ContainerButton, ContainerCvvCardNumber, ContainerFinishOrder, Loading, ErroMessage, Button, Container } from "./style";
 import { changeCart } from "../../redux/isCartOpen";
 import { emptyCart } from "../../redux/cartSlice";
 import { useState } from "react";
@@ -24,7 +24,7 @@ export function Payment({totalPriceCart}){
     const {register, handleSubmit } = useForm();
 
     function onSubmitAdress(data){
-        console.log(data)
+        // console.log(data)
         setOrderInformation(data)
         dispatch(changeAdressEdit(false))
     }
@@ -75,11 +75,14 @@ export function Payment({totalPriceCart}){
         dispatch(changeAdressEdit(true))
         dispatch(emptyCart())
     }
-    // console.log(orderInformation)
-    // console.log(cardInformation)
-    console.log(result.isSuccess)
-    console.log(result.data)
-    console.log(result.isLoading)
+
+    function handleCLickError(){
+        dispatch(changeAdressEdit(true))
+        dispatch(changePayment(false))
+    }
+    // console.log(result.isSuccess)
+    // console.log(result.data)
+    // console.log(result.isLoading)
     return (
         <>
             { adressEdit &&
@@ -155,7 +158,12 @@ export function Payment({totalPriceCart}){
                 </Form>
             }
 
-            { adressEdit===null && result.isLoading===false &&
+            {
+                adressEdit===null && result.isLoading  &&
+                    <Loading>Loading...</Loading>
+            }
+
+            { adressEdit===null && result.isLoading===false && result.isSuccess &&
                 <ContainerFinishOrder>
                     <h3>Pedido realizado - {result.data.orderId}</h3>
                     <p>Estamos felizes em informar que seu pedido já está em processo de preparação e, em breve, será entregue no endereço fornecido.</p>
@@ -164,6 +172,14 @@ export function Payment({totalPriceCart}){
                     <p>Esperamos que desfrute de uma deliciosa e agradável experiência gastronômica. Bom apetite!</p>
                     <button onClick={handleFinishedOrder}>Concluir</button>
                 </ContainerFinishOrder>
+            }
+
+            {
+                adressEdit===null && result.isLoading===false && result.isSuccess===false &&
+                    <Container>
+                        <ErroMessage>Erro no pedido</ErroMessage>
+                        <Button onClick={handleCLickError}>Voltar ao Carrinho</Button>
+                    </Container>
             }
         </>
     )
