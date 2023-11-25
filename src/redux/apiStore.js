@@ -11,8 +11,18 @@ export const apiStore = createApi({
         }),
         getAllRestaurants:builder.query({
             query:()=>'restaurantes'
+        }),
+        purchase: builder.mutation({
+            query:(body)=>({
+                url: 'checkout',
+                method: 'POST',
+                body,
+            })
+
+            // transformResponse: (response, meta, arg)=>response.data,
+            // transformErrorResponse: (response, meta, args)=> response.status,
         })
-    }),
+    })
 })
 
-export const { useGetRestaurantByIdQuery, useGetAllRestaurantsQuery } = apiStore;
+export const { useGetRestaurantByIdQuery, useGetAllRestaurantsQuery, usePurchaseMutation } = apiStore;

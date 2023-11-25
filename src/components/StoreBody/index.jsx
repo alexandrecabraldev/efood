@@ -28,18 +28,20 @@ export function StoreBody(){
     const dispatch = useDispatch();
 
 
-    function handleClickItem(picture, title, description, price, porcao){
+    function handleClickItem(picture, title, description, price, porcao, id){
         setOpenModal(!openModal)
+        // console.log(id)
         setModalInformation({
             modalPicture:picture,
             modalTitle: title,
             modalDescription: description,
             modalPrice: price,
             modalPorcao: porcao,
+            modalId:id,
         })
     }
 
-    function handleClickAddCart(picture, title, price){
+    function handleClickAddCart(picture, title, price, id){
 
         // const priceUnformated = parseFloat(price.replace("R$", "").replace(",", "."));
         
@@ -56,6 +58,7 @@ export function StoreBody(){
             picture,
             title,
             price,
+            id,
         }))
         
     }
@@ -74,6 +77,7 @@ export function StoreBody(){
                         description={modalInformation.modalDescription}
                         price={modalInformation.modalPrice}
                         porcao={modalInformation.modalPorcao}
+                        id={modalInformation.modalId}
                     />
                 }
 
@@ -88,6 +92,7 @@ export function StoreBody(){
                             return(
                                 <StoreItem
                                     key={item.id}
+                                    id={item.id}
                                     title = {item.nome}
                                     description = {item.descricao}
                                     picture={item.foto}

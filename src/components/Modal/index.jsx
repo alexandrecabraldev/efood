@@ -11,6 +11,7 @@ Modal.propTypes ={
     description:PropsTypes.string.isRequired,
     price:PropsTypes.number.isRequired,
     porcao:PropsTypes.string.isRequired,
+    id:PropsTypes.number.isRequired,
 }
 
 export function Modal(props){
@@ -25,7 +26,7 @@ export function Modal(props){
     }
 
     function handleClickCart(){
-        props.handleClickAddCart(props.picture, props.title, props.price)
+        props.handleClickAddCart(props.picture, props.title, props.price, props.id)
     }
 
     return(

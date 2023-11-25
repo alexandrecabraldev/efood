@@ -7,6 +7,7 @@ import { removeCartItem } from "../../redux/cartSlice";
 import { useEffect,useState } from "react";
 import { Payment } from "../Payment";
 import { changePayment } from "../../redux/isPaymentOpen";
+import { changeAdressEdit } from "../../redux/isAdressEditOpen";
 
 export function Cart(){
 
@@ -22,11 +23,12 @@ export function Cart(){
                 return acc + item.price;
             },0)
         )
-
     },[cart]);
 
     function handleClickCart(){
         dispatch(changeCart(false))
+        dispatch(changePayment(false))
+        dispatch(changeAdressEdit(true))
         // console.log('clicou para sair do cart');
     }
 

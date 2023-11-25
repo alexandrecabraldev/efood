@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { Form, ContainerLabelInput, ContainerCepNumber, ContainerButton, ContainerCvvCardNumber, ContainerFinishOrder } from "./style";
 import { changeCart } from "../../redux/isCartOpen";
 import { emptyCart } from "../../redux/cartSlice";
+import { useState } from "react";
+import { usePurchaseMutation } from "../../redux/apiStore";
 
 Payment.propTypes = {
     totalPriceCart: PropTypes.number.isRequired,
@@ -13,19 +15,58 @@ Payment.propTypes = {
 
 export function Payment({totalPriceCart}){
 
+    const cart = useSelector((state)=>state.cart);
     const adressEdit = useSelector((state)=>state.isAdressEditOpen);
     const dispatch = useDispatch();
+    const [orderInformation, setOrderInformation]= useState({});
+    const [purchase, result] = usePurchaseMutation();
 
     const {register, handleSubmit } = useForm();
 
     function onSubmitAdress(data){
         console.log(data)
+        setOrderInformation(data)
         dispatch(changeAdressEdit(false))
     }
 
     function onSubmitCard(data){
-        console.log(data)
+        // console.log(data)
+        // setCardInformation(data)
         dispatch(changeAdressEdit(null))
+
+        //mandar informações para backend aqui
+        purchase({
+            products:[
+                cart.map(item=>{
+                    return {
+                        id: item.id,
+                        price: Number(item.price)
+                    }
+                })
+            ],
+            delivery:{
+                receiver: orderInformation.nameDeliver,
+                adress:{
+                    description: orderInformation.adress,
+                    city:orderInformation.city,
+                    zipCode: orderInformation.CEP,
+                    number: Number(orderInformation.number),
+                    complement: orderInformation.extra
+
+                }
+            },
+            payment:{
+                card:{
+                    name: data.nameCard,
+                    number: data.numberCard,
+                    code: Number(data.cvv),
+                    expires:{
+                        month: Number(data.monthExpiration),
+                        year: Number(data.yearExpiration),
+                    }
+                }
+            }
+        })
     }
 
     function handleFinishedOrder(){
@@ -34,7 +75,11 @@ export function Payment({totalPriceCart}){
         dispatch(changeAdressEdit(true))
         dispatch(emptyCart())
     }
-
+    // console.log(orderInformation)
+    // console.log(cardInformation)
+    console.log(result.isSuccess)
+    console.log(result.data)
+    console.log(result.isLoading)
     return (
         <>
             { adressEdit &&
@@ -110,9 +155,9 @@ export function Payment({totalPriceCart}){
                 </Form>
             }
 
-            { adressEdit===null && 
+            { adressEdit===null && result.isLoading===false &&
                 <ContainerFinishOrder>
-                    <h3>Pedido realizado - ORDER_ID</h3>
+                    <h3>Pedido realizado - {result.data.orderId}</h3>
                     <p>Estamos felizes em informar que seu pedido já está em processo de preparação e, em breve, será entregue no endereço fornecido.</p>
                     <p>Gostaríamos de ressaltar que nossos entregadores não estão autorizados a realizar cobranças extras. </p>
                     <p>Lembre-se da importância de higienizar as mãos após o recebimento do pedido, garantindo assim sua segurança e bem-estar durante a refeição.</p>

@@ -8,12 +8,14 @@ StoreItem.propTypes={
     handleClick:PropTypes.func,
     price: PropTypes.number.isRequired,
     porcao: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
 }
 
 export function StoreItem(props){
 
     function handleClickButtonItemStore(){
-        props.handleClick(props.picture, props.title, props.description, props.price, props.porcao)
+        // console.log(props.id)
+        props.handleClick(props.picture, props.title, props.description, props.price, props.porcao, props.id)
     }
 
     return(
