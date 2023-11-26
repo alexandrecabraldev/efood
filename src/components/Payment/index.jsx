@@ -9,9 +9,7 @@ import { emptyCart } from "../../redux/cartSlice";
 import { useState } from "react";
 import { usePurchaseMutation } from "../../redux/apiStore";
 import * as yup from "yup"
-// import { useHookFormMask } from "use-mask-input"
 import { yupResolver } from "@hookform/resolvers/yup"
-
 
 Payment.propTypes = {
     totalPriceCart: PropTypes.number.isRequired,
@@ -23,7 +21,16 @@ const adressSchema = yup.object({
     city: yup.string().required("Cidade é obrigatório").min(4,'A cidade deve ter no mínimo 4 letras'),
     CEP: yup.string().required("CEP é obrigatório").length(8,'O CEP deve ter 8 letras').matches( /^\d+$/, 'O campo deve conter apenas números'),
     number: yup.number().transform(value=>isNaN(value)? undefined : value).required("Número é obrigatório").positive("Deve ser positivo").integer("Deve ser inteiro"),
-    extra: yup.string().transform(value=>value || undefined).default('sem complemento')
+    extra: yup.string().transform(value=>value || undefined).default('sem complemento'),
+})
+
+const cardSchema = yup.object({
+    nameCard: yup.string().required("O nome no cartão é obrigatório").min(4,'O nome deve ter no mínimo 4 letras'),
+    numberCard: yup.string().required("O número do cartão é obrigatório").matches( /^\d+$/, 'O campo deve conter apenas números'),
+    cvv: yup.string().required("Obrigatório").matches( /^\d+$/, 'Apenas números').min(3,'Mínimo 3 digitos').max(4, 'Máximo 4 digitos'),
+    monthExpiration: yup.number('Deve ser um número').transform(value=>isNaN(value)? undefined : value).required("O campo é obrigatório").min(1,'Entre 1 e 12').max(12,'Entre 1 e 12'),
+    yearExpiration: yup.number().typeError('Digite um número').test('validYear','Digite ano válido', 
+    value=> {return value>=new Date().getFullYear()}).required("O campo é obrigatório"),
 })
 
 export function Payment({totalPriceCart}){
@@ -37,7 +44,10 @@ export function Payment({totalPriceCart}){
     const {register, handleSubmit, formState: { errors } } = useForm(
         {resolver: yupResolver(adressSchema)}
     );
-    // const registerWithMask = useHookFormMask(register);
+
+    const {register: registerCard, handleSubmit: handleSubmitCard, formState: {errors: errorsCard}} = useForm({
+        resolver:yupResolver(cardSchema)
+    })
 
     function onSubmitAdress(data){
         
@@ -53,8 +63,6 @@ export function Payment({totalPriceCart}){
     }
 
     function onSubmitCard(data){
-        // console.log(data)
-        // setCardInformation(data)
         dispatch(changeAdressEdit(null))
 
         //mandar informações para backend aqui
@@ -149,30 +157,35 @@ export function Payment({totalPriceCart}){
 
             { adressEdit===false &&  
 
-                <Form onSubmit={handleSubmit(onSubmitCard)}>
+                <Form onSubmit={handleSubmitCard(onSubmitCard)}>
                     <h3>Pagamento - Valor a pagar R$ {totalPriceCart.toFixed(2)}</h3>
                     <ContainerLabelInput>
                         <label>Nome no cartão</label>
-                        <input type="text" {...register('nameCard', {required:true})}/>
+                        <input type="text" {...registerCard('nameCard')}/>
+                        {errorsCard.nameCard && <ErrorMessage>{errorsCard.nameCard.message}</ErrorMessage>}
                     </ContainerLabelInput>
                     <ContainerCvvCardNumber>
                         <ContainerLabelInput>
                             <label>Número do cartão</label>
-                            <input type="text" {...register('numberCard', {required:true})}/>
+                            <input type="text" {...registerCard('numberCard')}/>
+                            {errorsCard.numberCard && <ErrorMessage>{errorsCard.numberCard.message}</ErrorMessage>}
                         </ContainerLabelInput>
                         <ContainerLabelInput>
                             <label>CVV</label>
-                            <input type="text" {...register('cvv', {required:true})}/>
+                            <input type="text" {...registerCard('cvv')}/>
+                            {errorsCard.cvv && <ErrorMessage>{errorsCard.cvv.message}</ErrorMessage>}
                         </ContainerLabelInput>
                     </ContainerCvvCardNumber>
                     <ContainerCepNumber>
                         <ContainerLabelInput>
                             <label>Mês de vencimento</label>
-                            <input type="text" {...register('monthExpiration', {required:true})}/>
+                            <input type="text" {...registerCard('monthExpiration')}/>
+                            {errorsCard.monthExpiration && <ErrorMessage>{errorsCard.monthExpiration.message}</ErrorMessage>}
                         </ContainerLabelInput>
                         <ContainerLabelInput>
                             <label>Ano de vencimento</label>
-                            <input type="text" {...register('yearExpiration', {required:true})}/>
+                            <input type="text" {...registerCard('yearExpiration')}/>
+                            {errorsCard.yearExpiration && <ErrorMessage>{errorsCard.yearExpiration.message}</ErrorMessage>}
                         </ContainerLabelInput>
                     </ContainerCepNumber>
                     <ContainerButton>

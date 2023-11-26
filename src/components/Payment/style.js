@@ -32,6 +32,7 @@ export const Form = styled.form`
 export const ContainerLabelInput = styled.div`
     display: flex;
     flex-direction: column;
+    /* justify-content: center; */
     gap: 8px;
 
 `;
@@ -41,13 +42,14 @@ export const ContainerCepNumber = styled.div`
     grid-template-columns: 1fr 1fr;
     justify-content: center;
     gap: 2rem;
-    margin-bottom: 8px;
+    /* margin-bottom: 8px; */
     
 `;
 
 export const ContainerCvvCardNumber = styled.div`
     display: grid;
     grid-template-columns: 3fr 1fr;
+    justify-content: center;
     gap: 2rem;
 `;
 
